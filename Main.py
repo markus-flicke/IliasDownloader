@@ -16,3 +16,7 @@ if __name__ == '__main__':
     reader = Reader(navi.driver)
     navi.sign_in()
     reader.recursive_read()
+    print('--------SUCCESS---------')
+    print('files copied:')
+    for filename in reader.copied_files:
+        print(filename)
