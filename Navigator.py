@@ -2,7 +2,7 @@ from selenium import webdriver
 
 class Navigator():
     CHROME_DRIVERPATH = './chromedriver'
-    CREDENTIALS_PATH = '/Users/m/Desktop/credentials.txt'
+    CREDENTIALS_PATH = 'credentials.txt'
 
     def __init__(self, start_page = 'https://ilias.uni-marburg.de/login.php?target=&client_id=UNIMR&auth_stat='):
         download_dir = "./downloads/"
