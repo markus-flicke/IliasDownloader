@@ -11,7 +11,7 @@ class Reader():
         events_webelements = self.driver.find_elements_by_class_name('il_ContainerItemTitle')[::3]
         event_names = list(map(lambda val: val.text, events_webelements))
         self.events = dict(zip(event_names, events_webelements))
-        forbidden_dirs = ['übung', 'diskussion', 'umfrage', 'votes', 'abgabe', 'gruppe']
+        forbidden_dirs = ['übung', 'diskussion', 'umfrage', 'votes', 'abgabe', 'gruppe', 'tut02']
         for name in event_names:
             if any(map(lambda x: x in name.lower(), forbidden_dirs)) and not name.lower() == 'übungsaufgaben':
                 del self.events[name]
@@ -24,18 +24,26 @@ class Reader():
             already_have = list(map(lambda x: '.'.join(x.split('.')[:-1]), already_have))
         else:
             already_have = []
+
         content = self.dir()
         headers = list(content.keys())
-        url = self.driver.current_url
+
+        def is_downloadable(element):
+            return 'onclick' in element.get_attribute('innerHTML')
+
         for header in headers:
             if self.to_os_name(header) not in already_have:
-                self.dir()[header].click()
-                if not url == self.driver.current_url:
-                    self.recursive_read(target_dir=target_dir + header + '/')
-                    url = self.driver.current_url
-                else:
+
+                element = self.dir()[header]
+                if is_downloadable(element):
+                    element.click()
                     self.copy(header, target_dir)
                     self.copied_files.append(header)
+                else:
+                    element.click()
+                    self.recursive_read(target_dir=target_dir + header + '/')
+                    url = self.driver.current_url
+
         print('complete: {}'.format(target_dir))
         self.driver.back()
 
@@ -43,17 +51,12 @@ class Reader():
     def copy(self, filename, target_dir='output/', source_dir='downloads/'):
         filename = self.to_os_name(filename)
 
-        def finished_loading():
-            for file in os.listdir(source_dir):
-                if file.endswith('crdownload'):
-                    return False
-                dir_no_endings = list(map(lambda x: '.'.join(x.split('.')[:-1]), os.listdir(source_dir)))
-                if not filename in dir_no_endings:
-                    return False
-            return True
+        def finished_loading(filename):
+            filenames = list(map(lambda x: '.'.join(x.split('.')[:-1]), os.listdir(source_dir)))
+            return filename in filenames
 
         c = 0
-        while not finished_loading():
+        while not finished_loading(filename):
             time.sleep(0.001)
             c += 1
             if c % 1000 == 0:

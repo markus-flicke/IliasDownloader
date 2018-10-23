@@ -4,10 +4,11 @@ class Navigator():
     CHROME_DRIVERPATH = './chromedriver'
     CREDENTIALS_PATH = 'credentials.txt'
 
-    def __init__(self, start_page = 'https://ilias.uni-marburg.de/login.php?target=&client_id=UNIMR&auth_stat='):
+    def __init__(self, headless = False, start_page = 'https://ilias.uni-marburg.de/login.php?target=&client_id=UNIMR&auth_stat='):
         download_dir = "./downloads/"
         options = webdriver.ChromeOptions()
-        options.add_argument("--headless");
+        if headless:
+            options.add_argument("--headless")
 
         profile = {"plugins.plugins_list": [{"enabled": False, "name": "Chrome PDF Viewer"}],
                    # Disable Chrome's PDF Viewer

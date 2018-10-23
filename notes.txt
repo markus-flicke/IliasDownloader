@@ -1,0 +1,32 @@
+<h4 class="il_ContainerItemTitle">
+<a href="ilias.php?
+	ref_id=1528290&amp;cmd=view&amp;
+	cmdClass=ilrepositorygui&amp;cmdNode=rd&amp;
+	baseClass=ilrepositorygui" 
+class="il_ContainerItemTitle">
+
+Aufgabenblätter</a>
+</h4>
+
+<h4 class="il_ContainerItemTitle">
+<a href="https://ilias.uni-marburg.de/goto.php?
+target=file_1557118_download&amp;
+client_id=UNIMR" 
+
+class="il_ContainerItemTitle" target="_blank">
+Einteilung in die Tutorien</a> 
+<span class="il_ContainerItemPreview ">
+<a href="javascript:void(0);" 
+onclick="il.Preview.toggle(event, {
+	id: '1557118', 
+	htmlId: 'lg_div_1557118_pref_1528201', 
+	url: 'ilias.php?
+		baseClass=ilPreviewGUI&amp;
+		node_id=1557118&amp;context=1&amp;
+		obj_id=1978494&amp;cmdMode=asynch', status: 'created', loadingText: 'Lade Vorschau...' });
+		" title="Vorschau anzeigen"><img src="./Services/Preview/templates/default/images/preview.png" 
+	height="16" 
+	width="16">
+</a></span>
+</h4>
+		
