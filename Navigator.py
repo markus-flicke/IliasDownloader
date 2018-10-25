@@ -7,14 +7,15 @@ class Navigator():
     def __init__(self, headless = False, start_page = 'https://ilias.uni-marburg.de/login.php?target=&client_id=UNIMR&auth_stat='):
         download_dir = "./downloads/"
         options = webdriver.ChromeOptions()
-        if headless:
-            options.add_argument("--headless")
 
         profile = {"plugins.plugins_list": [{"enabled": False, "name": "Chrome PDF Viewer"}],
                    # Disable Chrome's PDF Viewer
                    "download.default_directory": download_dir, "download.extensions_to_open": "applications/pdf"}
         options.add_experimental_option("prefs", profile)
         self.driver = webdriver.Chrome(self.CHROME_DRIVERPATH, chrome_options=options)
+        if headless:
+            self.driver.set_window_position(10000, 10000)
+
         self.driver.get(start_page)
 
     def sign_in(self):

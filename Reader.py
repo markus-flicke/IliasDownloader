@@ -1,4 +1,5 @@
 import os
+import shutil
 import time
 
 
@@ -11,7 +12,7 @@ class Reader():
         events_webelements = self.driver.find_elements_by_class_name('il_ContainerItemTitle')[::3]
         event_names = list(map(lambda val: val.text, events_webelements))
         self.events = dict(zip(event_names, events_webelements))
-        forbidden_dirs = ['übung', 'diskussion', 'umfrage', 'votes', 'abgabe', 'gruppe', 'tut02']
+        forbidden_dirs = ['diskussion', 'umfrage', 'votes', 'abgabe', 'gruppe', 'tut02', 'themenvergabe']
         for name in event_names:
             if any(map(lambda x: x in name.lower(), forbidden_dirs)) and not name.lower() == 'übungsaufgaben':
                 del self.events[name]
@@ -67,11 +68,11 @@ class Reader():
         files = os.listdir(source_dir)
         for file in files:
             try:
-                print('from: {}\nto: {}'.format(source_dir + file, target_dir + file))
-                os.rename(source_dir + file, target_dir + file)
+                shutil.move(source_dir + file, target_dir + file)
+                # os.rename(source_dir + file, target_dir + file)
             except:
-                print('files: {}'.format(files))
-                print('file: {}'.format(file))
+                print('Copy fail\nfrom: {}\nto: {}'.format(source_dir + file, target_dir + file))
+                raise
         while os.listdir('downloads/'):
             time.sleep(0.001)
 
