@@ -29,7 +29,13 @@ if __name__ == '__main__':
     navi = Navigator(headless = process_kwargs())
     reader = Reader(navi.driver)
     navi.sign_in()
-    reader.recursive_read()
+    try:
+        reader.recursive_read()
+    except:
+        raise
+    finally:
+        reader.writer.save_stats()
+
     print('--------SUCCESS---------')
     print('files copied:')
     for filename in reader.copied_files:
