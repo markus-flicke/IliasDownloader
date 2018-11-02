@@ -12,7 +12,7 @@ class Reader:
         events_webelements = self.driver.find_elements_by_class_name('il_ContainerItemTitle')[::3]
         event_names = list(map(lambda val: val.text, events_webelements))
         self.events = dict(zip(event_names, events_webelements))
-        forbidden_dirs = ['diskussion', 'umfrage', 'votes', 'abgabe', 'themenvergabe', 'gruppe']
+        forbidden_dirs = ['diskussion', 'umfrage', 'votes', 'abgabe', 'themenvergabe', 'gruppe', 'übung03_Aufgabe1', 'lösungen zu r-aufgaben']
         for name in event_names:
             if any(map(lambda x: x in name.lower(), forbidden_dirs)) and not name.lower() == 'übungsaufgaben':
                 del self.events[name]

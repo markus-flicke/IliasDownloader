@@ -48,19 +48,32 @@ class Writer:
                          ignore_index = True)
 
     @classmethod
-    def recursive_create(self, path):
+    def recursive_create(self, target_dir):
+        self.recursive_create_inner(self.to_os_path(target_dir))
+
+    @classmethod
+    def recursive_create_inner(self, path):
+        print(path)
         if os.path.exists(path):
             return
-        mother_folder = ('/').join(path.split('/')[:-1])
+        mother_folder = ('/').join(path.split('/')[:-2])
         if os.path.exists(mother_folder):
             os.mkdir(path)
-        if not os.path.exists(mother_folder):
-            self.recursive_create(mother_folder)
+        else:
+            self.recursive_create_inner(mother_folder)
+            os.mkdir(path)
 
     @staticmethod
     def to_os_name(ilias_name):
         res = ilias_name.replace('/', '_') \
             .replace('ü', 'ue') \
+            .replace('ä', 'ae') \
+            .replace('ö', 'oe')
+        return res
+
+    @staticmethod
+    def to_os_path(ilias_path_name):
+        res = ilias_path_name.replace('ü', 'ue') \
             .replace('ä', 'ae') \
             .replace('ö', 'oe')
         return res
